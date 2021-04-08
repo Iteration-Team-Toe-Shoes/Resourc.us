@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
-// testing
-const MONGO_USERNAME = 'goblinshark';
-const MONGO_PASSWORD = 'goblinshark';
-const MONGO_HOSTNAME = 'cluster0.2j9ni.mongodb.net/';
-// const MONGO_PORT = '27017';
-const MONGO_DB = 'resourcus';
+require('dotenv').config();
 
-const url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}/`;
+const url = process.env.MONGO_CONNECTION_STRING
 
 mongoose.connect(url, {
     // options for the connect method to parse the URI
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: MONGO_DB
+    useUnifiedTopology: true
 })
-    .then(() => console.log('Connected to Resourcus DB.'))
-    .catch(err => console.log(err));
+.then(() => console.log('Connected to Resourcus DB.'))
+.catch(err => console.log(err));

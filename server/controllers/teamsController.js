@@ -1,4 +1,6 @@
 const { Teams } = require('../models/TeamsModel');
+const UsersModel = require('../models/UsersModel');
+
 const teamsController = {};
 
 teamsController.createTeam = (req, res, next) => {
@@ -87,6 +89,25 @@ teamsController.listThreeTeams = (req, res, next) => {
         });
 }
 
+teamsController.joinTeam = async (req, res, next) => {
+    const { id, teamsList } = req.body;
+    const updatedUser = await UsersModel.findOneAndUpdate({ _id: id }, { teamsList }, {new: true})
+    res.locals.user = updatedUser;
+    return next();
+}
+
+teamsController.leaveTeam = async (req, res, next) => {
+    const { id, teamsList } = req.body;
+    const updatedUser = await UsersModel.findOneAndUpdate({ _id: id }, { teamsList }, {new: true})
+    res.locals.user = updatedUser;
+    return next();
+}
+
+teamsController.findUserTeams = async (req, res, next) => {
+    const allTeamsArr = await Teams.find({});
+
+    res.locals.allTeamsArr = allTeamsArr;
+    return next();
 
 teamsController.addResourceToTeam = (req, res, next) => {
     console.log(' inside teamsController.addResourceToTeam:', res.locals.response)

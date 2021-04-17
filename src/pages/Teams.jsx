@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, Route } from 'react-router-dom';
-
 import { useUserContext, useStateValue } from '../StateProvider';
+import { Container, Row, Col } from 'reactstrap';
+import { CategoriesTagsSunBurst } from '../components/CategoriesTagsSunBurst';
+import { PopularResourcesBarChart } from '../components/PopularResourcesBarChart';
 
 function Teams() {
   const [_teams, setTeams] = useState([]);
-  // const { user } = useUserContext();
-  // console.log(user);
+  const [{ user }, dispatch] = useUserContext();
+  console.log(user);
 
   useEffect(() => {
     fetch("http://localhost:3000/teams/list")
     .then((response) => {
       return response.json(); //Parses to JSON
     }).then(data => {
+      console.log(data);
       setTeams(data);
       // console.log(data); ENDLESS RUNNING BUG!?
     })
@@ -42,6 +45,35 @@ function Teams() {
   // get values from state
   const [{ user }, dispatch] = useStateValue();
   console.log('user:', user)
+
+  const joinTeam = (teamID) => {
+    console.log(teamID);
+    const updatedUser = JSON.parse(JSON.stringify(user));
+    updatedUser.teamsList.push(teamID);
+
+    dispatch({
+          type: 'JOIN_TEAM',
+          item: updatedUser,
+        })
+
+    // Add to mongoDB database    
+    fetch("http://localhost:3000/teams/join", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedUser),
+    })
+      .then((res) => res.json())
+      .then(res => {
+        console.log(res);
+        console.log(res.teamsList);
+      }).catch(err => {
+        console.log('UPDATING TEAM FAILED', err);
+      })
+    
+
+  }
 
   return (
     <div className="wrapper">
@@ -131,6 +163,19 @@ function Teams() {
           {/* <Link to="/CreateTeam" className="btn btn-success">Create Team</Link> */}
 					<a href="/CreateTeam" className="btn btn-primary float-right mt-n1">Create a Team</a>
 					<h1 className="h3 mb-3">Teams</h1>
+    
+          <Container>
+            <Row>
+              <Col xs="6">
+                <div style={{ width: 400, height: 300 }}>
+                  <CategoriesTagsSunBurst />
+                </div>
+              </Col>
+              <Col xs="6">
+                <PopularResourcesBarChart />
+              </Col>
+            </Row>
+          </Container>
 
 					<div className="row">
             {/* CARD COMPONENT (team) */}
@@ -148,7 +193,8 @@ function Teams() {
 								</div>
                 <div className="card-body px-4 pt-2">
                   <Link className="btn btn-info" to={"/teams/" + team._id}>View</Link>
-                  <Link className="btn btn-outline-success btn-join-team" to="/#">Join</Link>
+                  { user.isLoggedIn && user.teamsList.indexOf(team._id) === -1 && <button type="button" onClick={() => joinTeam(team._id)}>Join</button>}
+                  { user.isLoggedIn && user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> }
                 </div>
 							</div>
 						</div>)}

@@ -31,6 +31,18 @@ const reducer = (state, action) => {
           id: null,
         },
       };
+    case 'JOIN_TEAM':
+
+      return {
+        ...state,
+        user: action.item,
+      }
+    case 'LEAVE_TEAM':
+
+      return {
+        ...state,
+        user: action.item,
+      }
     default:
       return state;
   }

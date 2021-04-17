@@ -18,6 +18,7 @@ import CreateTeam from './components/CreateTeam';
 import CreateResource from './components/CreateResource';
 import ResourceCard from './components/ResourceCard';
 import { useStateValue } from './StateProvider';
+import ResourceCardPage from './components/ResourceCardPage';
 
 function App() {
   const location = useLocation().pathname;
@@ -62,6 +63,7 @@ function App() {
         <Route path="/CreateResource"><CreateResource /></Route>
         <Route path="/CreateTeam"><CreateTeam /></Route>
         <Route path="/ResourceCard"><ResourceCard /></Route>
+        <Route path="/resource/:id"><ResourceCardPage /></Route>
       </div>
       ) : (
         <div>

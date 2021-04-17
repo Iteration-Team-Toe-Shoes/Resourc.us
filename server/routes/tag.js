@@ -15,7 +15,7 @@ router.get('/list',
   tagsController.listAllTags,
   (req, res) => {
     console.log('list tags route is working');
-    console.log(res.locals.response);
+    // console.log(res.locals.response);
     res.status(200).json(res.locals.response);
   }
 );

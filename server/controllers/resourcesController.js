@@ -1,3 +1,4 @@
+const { request } = require('express');
 const { Resources } = require('../models/ResourcesModel');
 const resourcesController = {};
 
@@ -122,5 +123,26 @@ resourcesController.upvoteResource = (req, res, next) => {
             })
         });
 }
+
+resourcesController.getResourceById = (req, res, next) => {
+
+  Resources.find({
+    _id: req.params.id,
+  })
+    .then((data) => {
+      res.locals.response = data;
+      console.log('resourcesController.getResourceById:', 'resource displayed');
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Get Resource - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in resourcesController.getResourceById',
+          message: err,
+        },
+      });
+    });
+};
 
 module.exports = resourcesController;

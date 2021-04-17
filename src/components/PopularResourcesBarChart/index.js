@@ -1,0 +1,1 @@
+export {PopularResourcesBarChart} from './PopularResourcesBarChart';

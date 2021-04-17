@@ -17,7 +17,11 @@ const CategoriesSchema = new Schema({
     type: Number, 
     required: true,
     default: 0 
-  }
+  },
+  tags: [{
+    type: Schema.Types.ObjectId, 
+    ref: 'tags',
+  }],
 }, options);
 
 var Categories = mongoose.model('categories', CategoriesSchema);

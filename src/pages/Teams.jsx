@@ -4,9 +4,11 @@ import { Container, Row, Col } from 'reactstrap';
 import { CategoriesTagsSunBurst } from '../components/CategoriesTagsSunBurst';
 import { PopularResourcesBarChart } from '../components/PopularResourcesBarChart';
 import { useUserContext, useStateValue } from '../StateProvider';
+// import SearchField from 'react-search-field';
 
 function Teams() {
   const [_teams, setTeams] = useState([]);
+  const [_teamsCopy, setTeamsCopy] = useState([]);
   const { user , dispatch} = useUserContext();
 
   // get values from state
@@ -74,40 +76,17 @@ function Teams() {
 
   }
 
+  // const onSearch = async (value) => {
+  //   const searchedTeams = _teams.filter(team => team.name.toLowerCase().includes(value.toLowerCase()) || team.description.toLowerCase().includes(value.toLowerCase()))
+  //   setTeams(searchedTeams);
+  // }
+
+  // const onClearSearch = () => {
+  //   setTeams(_teamsCopy);
+  // }
+
   return (
     <div className="wrapper">
-      {/* SIDE NAVBAR COMPONENT */}
-      <nav id="sidebar" className="sidebar">
-        <div className="sidebar-content js-simplebar">
-          <a className="sidebar-brand" href="/">
-            <span className="align-middle mr-3"><i className='bx bx-bolt-circle'></i> Resourcus</span>
-          </a>
-
-          <ul className="sidebar-nav">
-            <li className="sidebar-header">Home</li>
-            <li className="sidebar-header">Teams</li>
-            <li className="sidebar-header"><Link to='/'><i className='bx bx-home-heart' ></i> Home</Link></li>
-            <li className="sidebar-header"><Link to='/teams'><i className='bx bx-group' ></i> Teams</Link></li>
-
-            <li className="sidebar-item">
-              <a href="/teams" className="sidebar-link ">
-                <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">View All Teams</span>
-              </a>
-            </li>
-
-            <li className="sidebar-item active">
-              <a href="#pages" data-toggle="collapse" className="sidebar-link">
-                <i className="align-middle" data-feather="layout"></i> <span className="align-middle">My Teams</span>
-              </a>
-              <ul id="pages" className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-profile.html">Team 1</a></li>
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-settings.html">Team 2</a></li>
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-clients.html">Team 3</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
     {/* MAIN LAYOUT COMPONENT */}
 		<div className="main">
@@ -177,10 +156,43 @@ function Teams() {
             </Row>
           </Container>
 
+          <div className="searchContainer">
+            {/* <SearchField
+            placeholder="Search teams..."
+            onSearchClick={(value) => onSearch(value)}
+            /> */}
+            {/* <button type="button" onClick={onClearSearch} style="margin-left:15px">Clear Search</button> */}
+          </div>
+
 					<div className="row">
 
             {/* CARD COMPONENT (team) */}
-            {_teams.map(team =>
+            {user.user.isLoggedIn && _teams.map(team =>
+              <div key={team._id} className="col-12 col-md-6 col-lg-4">
+                <div className="card">
+                  <img className="card-img-top" src={team?.profilePic ?? "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"} alt="Unsplash" />
+                  <div className="card-header px-4 pt-4">
+                    <h5 className="card-title mb-0">{team.name}</h5>
+                    <div className="meta">
+                      {console.log(team?.categoriesList)}
+                      <div className="badge badge-secondary my-2">{team?.categoriesList[0] ? team?.categoriesList[0]?.name : "General"}</div>
+                      <div><i className='bx bx-merge'></i>{team.resourcesCount}</div>
+                      <div><i className='bx bxs-user-account'></i> {team.usersCount}</div>
+                    </div>
+                  </div>
+                  <div className="card-body px-4 pt-2">
+                    <p>{team.description}</p>
+                  </div>
+                  <div className="card-body px-4 pt-2 actions">
+                    <Link className="btn btn-info" to={"/teams/" + team._id}>View</Link>
+                    { user.user.teamsList.indexOf(team._id) !== -1 && <button type="button" className="btn btn-sucess" onClick={() => leaveTeam(team)}>Leave Team</button>}
+                    {/* { user.isLoggedIn && user.teamsList.indexOf(team._id) === -1 && <button type="button" onClick={() => joinTeam(team._id)}>Join</button>}
+                    { user.isLoggedIn && user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> } */}
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* {_teams.map(team =>
             <div key={team._id} className="col-12 col-md-6 col-lg-4">
 							<div className="card">
 								<img className="card-img-top" src="img/photos/unsplash-1.jpg" alt="Unsplash" />
@@ -201,7 +213,7 @@ function Teams() {
                   { user.isLoggedIn && user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> }
                 </div>
 							</div>
-						</div>)}
+						</div>)} */}
 
           </div>
         </div>  

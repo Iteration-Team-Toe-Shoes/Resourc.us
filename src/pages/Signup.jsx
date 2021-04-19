@@ -4,11 +4,11 @@ import {SignUpForm} from '../components';
 
 const SignupPage = () => (
   <div className="container formContainer">
-    <h1>This is Signup.</h1>
+    <h1>Get Started</h1>
     <SignUpForm />
+    <hr></hr>
     <p>
-      Have an account?
-      <Link to="/login">Log In</Link>
+      Have an account? <Link to="/login">Log In</Link>
     </p>
   </div>
 );

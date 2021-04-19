@@ -57,22 +57,26 @@ function App() {
 
   return (
     <div className="app">
-      { user.isLoggedIn || localStorage.getItem('userIsLoggedIn') ? (
-      <div>
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/teams/:id" component={TeamDetails} />
-        <Route path="/teams" exact component={Teams} />
-        <Route path="/CreateResource" component={CreateResource} />
-        <Route path="/CreateTeam" component={CreateTeam} />
-        <Route path="/resources" component={ResourceCard} /> 
-      </div>
-      ) : (
-        <div>
-          <Route path="/" exact component={LandingPage}></Route>
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/login" component={LoginPage} />
-        </div>
-      )}
+      { user.isLoggedIn || localStorage.getItem('userIsLoggedIn') ?
+        (
+          <div className="wrapper">
+            <NavBar />
+
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/teams/:id" component={TeamDetails} />
+            <Route path="/teams" exact component={Teams} />
+            <Route path="/CreateResource" component={CreateResource} />
+            <Route path="/CreateTeam" component={CreateTeam} />
+            <Route path="/resources" component={ResourceCard} /> 
+          </div>
+        ) : (
+          <div>
+            <Route path="/" exact component={LandingPage}></Route>
+            <Route path="/signup" component={SignupPage} />
+            <Route path="/login" component={LoginPage} />
+          </div>
+        )
+      }
 
       {/* { user.isLoggedIn ? (
         // authorized layout component (topNavbarAuth, sideNavBar, main, contentContainer )

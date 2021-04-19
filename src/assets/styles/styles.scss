@@ -32,3 +32,66 @@ body > * {
 .btn-join-team {
   margin-left: 10px;
 }
+
+
+.landing-container {
+  height: 100vh;
+  background-color: lighten(#293042, 10%);
+
+  nav {
+    background-color: #293042;
+    padding: 15px 25px;
+    text-align: right;
+  }
+}
+
+.landing-hero > * {
+  color: white;
+}
+
+.landing-hero {
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 15px;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 70px;
+  }
+
+  .btn-success {
+    margin-top: 20px;
+  }
+}
+
+.formContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  text-align: center;
+
+  h1 {
+    margin-bottom: 40px;
+  }
+}
+
+.sidebar-link {
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+  .btn-join {
+    margin-left: 10px;
+  }
+
+  .wrapper {
+    height: 100%;
+  }

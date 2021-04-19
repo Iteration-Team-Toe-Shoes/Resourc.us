@@ -23,38 +23,20 @@ import {
 
 function NavBar() {
   return (
-    <RBNavBar bg="dark" expand="lg">
-      <RBNavBar.Toggle aria-controls="basic-navbar-nav" />
-      <RBNavBar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Link to="/"><h1>Resourc.us</h1></Link>
-          <NavItem className="navItem">
-            <Nav.Link as={Link} to="/home" className="content">
-              <FontAwesomeIcon icon={faHome}/>
-              <span className="label">Home</span>
-            </Nav.Link>
-          </NavItem>
-          <NavItem className="navItem">
-            <Nav.Link as={Link} to="/profile" className="content">
-              <FontAwesomeIcon icon={faAddressCard}/>
-              <span className="label">Profile</span>
-            </Nav.Link>
-          </NavItem>
-          <NavItem className="navItem">
-            <Nav.Link as={Link} to="/teams" className="content">
-              <FontAwesomeIcon icon={faUserFriends}/>
-              <span className="label">Teams</span>
-            </Nav.Link>
-          </NavItem>
-          <NavItem className="navItem">
-            <Nav.Link as={Link} to="/resources" className="content">
-              <FontAwesomeIcon icon={faBookOpen}/>
-              <span className="label">Resources</span>
-            </Nav.Link>
-          </NavItem>
-        </Nav>
-      </RBNavBar.Collapse>
-    </RBNavBar>
+    <nav id="sidebar" className="sidebar">
+    <div className="sidebar-content js-simplebar">
+      <a className="sidebar-brand" href="/">
+        <span className="align-middle mr-3"><i className='bx bx-bolt-circle'></i> Resourcus</span>
+      </a>
+
+      <ul className="sidebar-nav">
+        <li className="sidebar-link"><Link to='/'><i className='bx bx-home-heart' ></i> Home</Link></li>
+        <li className="sidebar-link"><Link to='/profile'><i className='bx bx-home-heart' ></i> Profile</Link></li>
+        <li className="sidebar-link"><Link to='/teams'><i className='bx bx-group' ></i> Teams</Link></li>
+        <li className="sidebar-link"><Link to='/resources'><i className='bx bx-home-heart' ></i> Resources</Link></li>
+      </ul>
+    </div>
+  </nav>
   );
 }
 

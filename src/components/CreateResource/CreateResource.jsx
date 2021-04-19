@@ -3,10 +3,12 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { Multiselect } from 'multiselect-react-dropdown';
+import { useHistory } from 'react-router-dom';
 
 function CreateResource() {
   const currentTeam = localStorage.getItem('currentTeam')
   const currentUser = localStorage.getItem('currentUser')
+  const history = useHistory();
   
   // State
   const [_payload, setPayload] = useState({
@@ -138,6 +140,8 @@ function CreateResource() {
       .then((data) => {
         console.log('created resource:', data);
         // TO DO: redirect to team page
+        const lastPage = '/teams/' + localStorage.getItem('currentTeam')
+        history.push(lastPage)
       })
       .catch((err) => {
         console.log("POST Failed to create resource", err);

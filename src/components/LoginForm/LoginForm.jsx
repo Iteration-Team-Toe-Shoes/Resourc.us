@@ -112,7 +112,9 @@ const LoginForm = () => {
             Log In
           </button>
         </div>
-      </form>
+      </form>  
+
+      <hr></hr>   
 
       <GoogleLogin
         clientId={apiKeys.GOOGLE_OAUTH_CLIENT_ID}

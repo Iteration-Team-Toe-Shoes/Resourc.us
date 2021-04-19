@@ -149,40 +149,10 @@ function HomePage() {
       })
   }
 
+  // console.log("team", team);
+
   return (
     <div className="wrapper">
-      {/* SIDE NAVBAR COMPONENT */}
-      <nav id="sidebar" className="sidebar">
-        <div className="sidebar-content js-simplebar">
-          <a className="sidebar-brand" href="/">
-            <span className="align-middle mr-3"><i className='bx bx-bolt-circle'></i> Resourcus</span>
-          </a>
-
-          <ul className="sidebar-nav">
-            <li className="sidebar-header">Home</li>
-            <li className="sidebar-header">Teams</li>
-            <li className="sidebar-header"><Link to='/'><i className='bx bx-home-heart' ></i> Home</Link></li>
-            <li className="sidebar-header"><Link to='/teams'><i className='bx bx-group' ></i> Teams</Link></li>
-
-            <li className="sidebar-item">
-              <a href="/teams" className="sidebar-link ">
-                <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">View All Teams</span>
-              </a>
-            </li>
-
-            <li className="sidebar-item active">
-              <a href="#pages" data-toggle="collapse" className="sidebar-link">
-                <i className="align-middle" data-feather="layout"></i> <span className="align-middle">My Teams</span>
-              </a>
-              <ul id="pages" className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-profile.html">Team 1</a></li>
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-settings.html">Team 2</a></li>
-                <li className="sidebar-item"><a className="sidebar-link" href="pages-clients.html">Team 3</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
     {/* MAIN LAYOUT COMPONENT */}
 		<div className="main">
@@ -238,57 +208,73 @@ function HomePage() {
 					{/* <a href="#" className="btn btn-primary float-right mt-n1">Create a Team</a>
 					<h1 className="h3 mb-3">Teams</h1> */}
 
-          <h1>Welcome Back, {user.user.firstName}</h1>
+          <div>
+            <h1>Welcome Back, {user.user.firstName}</h1>
+          </div>
 
 					<div className="row">
-            {user.user.isLoggedIn && <h2>Your Teams:</h2>}
+            <div className="col-12">{user.user.isLoggedIn && <h2>Your Teams:</h2>}</div>
 
             {/* CARD COMPONENT (team) */}
             {user.user.isLoggedIn && teams.map(team =>
               <div key={team._id} className="col-12 col-md-6 col-lg-4">
-							<div className="card">
-								<img className="card-img-top" src="img/photos/unsplash-1.jpg" alt="Unsplash" />
-								<div className="card-header px-4 pt-4">
-									<h5 className="card-title mb-0">{team.name}</h5>
-                  <div className="meta">
-                    <div className="badge badge-secondary my-2">{team.categoriesList[0] ? team.categoriesList[0] : "General"}</div>
-                    <div><i className='bx bx-merge'></i>{team.resourcesCount}</div>
-                    <div><i className='bx bxs-user-account'></i> {team.usersCount}</div>
+                <div className="card">
+                  <img className="card-img-top" src={team?.profilePic ?? "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"} alt="Unsplash" />
+                  <div className="card-header px-4 pt-4">
+                    <h5 className="card-title mb-0">{team.name}</h5>
+                    <div className="meta">
+                      {/* {console.log("team.categoresList --> ", categoresList )} */}
+                      {/* <div className="badge badge-secondary my-2">{team.categoriesList[0] ? team.categoriesList[0].name : "General"}</div> */}
+                      <div><i className='bx bx-merge'></i>{team.resourcesCount}</div>
+                      <div><i className='bx bxs-user-account'></i> {team.usersCount}</div>
+                    </div>
                   </div>
-								</div>
-								<div className="card-body px-4 pt-2">
-									<p>{team.description}</p>
-								</div>
-                <div className="card-body px-4 pt-2 actions">
-                  <Link className="btn btn-info" to={"/teams/" + team._id}>View</Link>
-                  { user.user.teamsList.indexOf(team._id) !== -1 && <button type="button" onClick={() => leaveTeam(team)}>Leave Team</button>}
-                  {/* { user.isLoggedIn && user.teamsList.indexOf(team._id) === -1 && <button type="button" onClick={() => joinTeam(team._id)}>Join</button>}
-                  { user.isLoggedIn && user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> } */}
+                  <div className="card-body px-4 pt-2">
+                    <p>{team.description}</p>
+                  </div>
+                  <div className="card-body px-4 pt-2 actions">
+                    <Link className="btn btn-info" to={"/teams/" + team._id}>View</Link>
+                    { user.user.teamsList.indexOf(team._id) !== -1 && <button type="button" className="btn btn-sucess" onClick={() => leaveTeam(team)}>Leave Team</button>}
+                    {/* { user.isLoggedIn && user.teamsList.indexOf(team._id) === -1 && <button type="button" onClick={() => joinTeam(team._id)}>Join</button>}
+                    { user.isLoggedIn && user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> } */}
+                  </div>
                 </div>
-							</div>
-						</div>
-          )}
-        </div>
-
-        {/* DISCOVER TEAMS COMPONENT */}
-        {/* TO DO: UPDATE STYLING */}
-        {user.user.isLoggedIn && <h2>Discover:</h2>}
-        {user.user.isLoggedIn && otherTeams.map(team =>
-          <div key={team._id}>
-            <h1>{team.name}</h1>
-            <p>{team.category}</p>
-            <p>{team.description}</p>
-            <div>
-              { user.user.teamsList.indexOf(team._id) === -1 && <button type="button" onClick={() => joinTeam(team)}>Join</button>}
-              { user.user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> }
-              <Link className="btn btn-primary" to={"/teams/" + team._id}>View</Link>
-            </div>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* DISCOVER TEAMS COMPONENT */}
+          {/* TO DO: UPDATE STYLING */}
+          <div className="row">
+          <div className="col-12">{user.user.isLoggedIn && <h2>Discover:</h2>}</div>
+            {user.user.isLoggedIn && otherTeams.map(team => 
+              <div key={team._id} className="col-12 col-md-6 col-lg-4">
+                <div className="card">
+                  <img className="card-img-top" src={team?.profilePic ?? "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"} alt="Unsplash" />
+                  <div className="card-header px-4 pt-4">
+                    <h5 className="card-title mb-0">{team.name}</h5>
+                    <div className="meta">
+                      {/* <div className="badge badge-secondary my-2">{team.categoriesList[0] ? team.categoriesList[0].name : "General"}</div> */}
+                      <div><i className='bx bx-merge'></i>{team.resourcesCount}</div>
+                      <div><i className='bx bxs-user-account'></i> {team.usersCount}</div>
+                    </div>
+                  </div>
+                  <div className="card-body px-4 pt-2">
+                    <p>{team.description}</p>
+                  </div>
+                  <div className="card-body px-4 pt-2 actions">
+                    <Link className="btn btn-info" to={"/teams/" + team._id}>View</Link>
+                    { user.user.teamsList.indexOf(team._id) === -1 && <button className="btn btn-success btn-join" type="button" onClick={() => joinTeam(team)}>Join</button>}
+                    { user.user.teamsList.indexOf(team._id) !== -1 && <p>Joined</p> }
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>  
-        </main>
-      </div>  
-		</div>
+      </main>
+    </div>  
+  </div>
   );
 }
 

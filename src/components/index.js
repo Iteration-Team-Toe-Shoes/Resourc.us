@@ -1,4 +1,4 @@
-import {NavBar} from './NavBar';
+import { NavBar} from './NavBar'
 import {LoginForm} from './LoginForm';
 import {SignUpForm} from './SignUpForm';
 import {CreateResource} from './CreateResource';
